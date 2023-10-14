@@ -17,4 +17,11 @@ async def wait_n(n: int, max_delay: int) -> list[float]:
     """
 
     sorted_list: list[float] = []
+
+    async def randsleep(max_delay: int, sorted_list: list[float]) -> None:
+        sleep: float = await wait_random(max_delay)
+        await asyncio.sleep(sleep)
+        sorted_list.append(sleep)
+
+    await asyncio.gather(*(randsleep(max_delay, sorted_list) for _ in range(n)))
     return sorted_list
